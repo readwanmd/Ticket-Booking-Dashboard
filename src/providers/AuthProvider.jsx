@@ -1,4 +1,4 @@
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import AuthContext from '../contexts/AuthContext';
 
@@ -7,26 +7,38 @@ const AuthProvider = ({ children }) => {
 	const [decodedUser, setDecodedUser] = useState(null);
 
 	useEffect(() => {
-		const user = localStorage.getItem('user');
-		if (user) {
-			setUser(JSON.parse(user));
+		const storedUser = localStorage.getItem('user');
+		if (storedUser) {
+			const parsedUser = JSON.parse(storedUser);
+			setUser(parsedUser);
 
-			setDecodedUser(jwtDecode(user));
+			if (parsedUser.token) {
+				setDecodedUser(jwtDecode(parsedUser.token));
+			}
 		}
 	}, []);
 
 	const login = (userData) => {
 		setUser(userData);
-		localStorage.setItem('user', JSON.stringify(userData));
+		localStorage.setItem('user', JSON.stringify(userData.token));
+
+		if (userData.token) {
+			// setDecodedUser(jwtDecode(userData.token));
+		}
 	};
 
 	const register = (userData) => {
 		setUser(userData);
 		localStorage.setItem('user', JSON.stringify(userData));
+
+		if (userData.token) {
+			setDecodedUser(jwtDecode(userData.token));
+		}
 	};
 
 	const logout = () => {
 		setUser(null);
+		setDecodedUser(null);
 		localStorage.removeItem('user');
 	};
 

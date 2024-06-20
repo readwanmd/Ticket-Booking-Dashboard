@@ -1,11 +1,18 @@
+import { jwtDecode } from 'jwt-decode';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import user from '../../assets/user.png';
-import useAuth from '../../hooks/useAuth';
 import Logout from '../Auth/Logout';
 
 const Sidebar = () => {
-	const { decodedUser } = useAuth();
-	console.log(decodedUser);
+	const [decodedUser, setDecodedUser] = useState(null);
+
+	useEffect(() => {
+		const user = localStorage.getItem('user');
+		if (user) {
+			setDecodedUser(jwtDecode(user));
+		}
+	}, []);
 
 	return (
 		<div className="fixed h-screen w-64 flex flex-col justify-between bg-gray-800 text-white">
@@ -37,9 +44,9 @@ const Sidebar = () => {
 								</li>
 							</>
 						)}
-						<li className="p-4 hover:bg-gray-700">
+						{/* <li className="p-4 hover:bg-gray-700">
 							<Link to="/update-event">Update Event</Link>
-						</li>
+						</li> */}
 					</ul>
 				</nav>
 			</div>
