@@ -10,6 +10,7 @@ import Events from '../pages/Events';
 import Home from '../pages/Home';
 import LoginPage from '../pages/LoginPage';
 import NotFound from '../pages/NotFound';
+import PaymentPage from '../pages/PaymentPage';
 import RegistrationPage from '../pages/RegistrationPage';
 import UserProvider from '../providers/AuthProvider';
 import EventProvider from '../providers/EventProvider';
@@ -28,9 +29,10 @@ const AppRoutes = () => {
 							<Route path="/events" element={<Events />} />
 							<Route path="/event/:id" element={<EventDetail />} />
 							<Route path="/book-event" element={<BookingForm />} />
+							<Route path="/payment" element={<PaymentPage />} />
+							<Route path="/Bookings" element={<Bookings />} />
 							{decodedUser?.user.role === 'admin' && (
 								<>
-									<Route path="/Bookings" element={<Bookings />} />
 									<Route path="/create-event" element={<CreateEvent />} />
 								</>
 							)}

@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createEvent } from '../../api/events';
 
 const EventCreateForm = () => {
+	const navigate = useNavigate();
+
 	const [formData, setFormData] = useState({
 		name: '',
 		description: '',
@@ -22,7 +25,10 @@ const EventCreateForm = () => {
 		e.preventDefault();
 		try {
 			const response = await createEvent(formData);
-			console.log('Event created successfully:', response);
+
+			alert('Event created successfully');
+			navigate('/events');
+
 			// Reset form or show success message
 		} catch (error) {
 			console.error('Error creating event:', error.response.data.msg);
@@ -85,7 +91,7 @@ const EventCreateForm = () => {
 				</label>
 				<input
 					type="number"
-					min={1}
+					min={0}
 					id="price"
 					name="price"
 					value={formData.price}

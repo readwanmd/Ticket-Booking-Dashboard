@@ -15,7 +15,7 @@ const BookingList = () => {
 
 	return (
 		<div className="overflow-x-hidden">
-			<h2 className="text-2xl">Bookings</h2>
+			<h2 className="text-4xl mb-4 font-semibold">Bookings</h2>
 			<div className="overflow-x-auto">
 				<table className="min-w-full">
 					<thead className="bg-white border-b">
@@ -60,10 +60,10 @@ const BookingList = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{bookings.map((booking) => (
+						{bookings.map((booking, index) => (
 							<tr key={booking._id} className="bg-gray-100 border-b">
 								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-									1
+									{index + 1}
 								</td>
 								<td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 									{booking.event.name}
