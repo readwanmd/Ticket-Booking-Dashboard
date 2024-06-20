@@ -1,7 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../api/auth';
+import useAuth from '../hooks/useAuth';
 
 const RegistrationPage = () => {
+	const { register: registerUser } = useAuth();
+	const navigate = useNavigate();
+
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -18,7 +23,16 @@ const RegistrationPage = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(formData);
+		console.log('Form data:', formData);
+
+		try {
+			console.log('Calling register function...');
+			const user = await register(formData);
+			registerUser(user);
+			navigate('/');
+		} catch (error) {
+			console.error('Registration failed:', error);
+		}
 	};
 
 	return (

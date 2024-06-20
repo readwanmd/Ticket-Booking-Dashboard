@@ -20,13 +20,20 @@ const AuthProvider = ({ children }) => {
 		localStorage.setItem('user', JSON.stringify(userData));
 	};
 
+	const register = (userData) => {
+		setUser(userData);
+		localStorage.setItem('user', JSON.stringify(userData));
+	};
+
 	const logout = () => {
 		setUser(null);
 		localStorage.removeItem('user');
 	};
 
 	return (
-		<AuthContext.Provider value={{ user, decodedUser, login, logout }}>
+		<AuthContext.Provider
+			value={{ user, decodedUser, login, logout, register }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

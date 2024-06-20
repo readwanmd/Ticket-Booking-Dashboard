@@ -1,45 +1,32 @@
 import { useEffect, useState } from 'react';
-import { getBookings } from '../../api/bookings';
+import { getUserBookings } from '../../api/bookings';
+import useAuth from '../../hooks/useAuth';
 
-const BookingList = () => {
+const MyBookings = () => {
 	const [bookings, setBookings] = useState([]);
-	const [sortDirection, setSortDirection] = useState('asc');
+	const { decodedUser } = useAuth();
 
 	useEffect(() => {
 		const fetchBookings = async () => {
-			const data = await getBookings();
+			const data = await getUserBookings(decodedUser?.user._id);
 			setBookings(data);
 		};
 
 		fetchBookings();
 	}, []);
 
-	const handleSort = () => {
-		const direction = sortDirection === 'asc' ? 'desc' : 'asc';
-		const sortedBookings = [...bookings].sort((a, b) => {
-			if (direction === 'asc') {
-				return a._id.localeCompare(b._id);
-			} else {
-				return b._id.localeCompare(a._id);
-			}
-		});
-		setBookings(sortedBookings);
-		setSortDirection(direction);
-	};
-
 	return (
 		<div className="overflow-x-hidden">
-			<h2 className="text-4xl mb-4 font-semibold">Bookings</h2>
+			<h2 className="text-4xl mb-4 font-semibold">My Bookings</h2>
 			<div className="overflow-x-auto">
 				<table className="min-w-full">
 					<thead className="bg-white border-b">
 						<tr>
 							<th
 								scope="col"
-								className="text-sm font-medium text-gray-900 px-6 py-4 text-left cursor-pointer"
-								onClick={handleSort}
+								className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
 							>
-								# {sortDirection === 'asc' ? ' ▲' : ' ▼'}
+								#
 							</th>
 							<th
 								scope="col"
@@ -59,12 +46,6 @@ const BookingList = () => {
 							>
 								Tickets
 							</th>
-							<th
-								scope="col"
-								className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-							>
-								Booked By
-							</th>
 
 							<th
 								scope="col"
@@ -81,9 +62,7 @@ const BookingList = () => {
 								className="bg-gray-100 border-b even:bg-gray-4000 odd:bg-gray-200 "
 							>
 								<td className="px-6 py-4 whitespace-nowrap text-black text-sm font-medium">
-									{sortDirection === 'asc'
-										? index + 1
-										: bookings.length - index}
+									{index + 1}
 								</td>
 								<td className="text-sm  px-6 py-4 whitespace-nowrap text-black">
 									{booking.event.name}
@@ -94,9 +73,7 @@ const BookingList = () => {
 								<td className="text-sm px-6 py-4 whitespace-nowrap text-black">
 									{booking.tickets}
 								</td>
-								<td className="text-sm px-6 py-4 whitespace-nowrap text-black">
-									{booking.user.name}
-								</td>
+
 								<td className="text-sm px-6 py-4 whitespace-nowrap text-black">
 									{booking.paymentStatus}
 								</td>
@@ -109,4 +86,4 @@ const BookingList = () => {
 	);
 };
 
-export default BookingList;
+export default MyBookings;

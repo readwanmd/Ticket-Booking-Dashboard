@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import BookingForm from '../components/Bookings/BookingForm';
+import MyBookings from '../components/Bookings/MyBookings';
 import EventDetail from '../components/Events/EventDetail';
 import useAuth from '../hooks/useAuth';
 import MainLayout from '../layout/MainLayout';
@@ -30,7 +31,8 @@ const AppRoutes = () => {
 							<Route path="/event/:id" element={<EventDetail />} />
 							<Route path="/book-event" element={<BookingForm />} />
 							<Route path="/payment" element={<PaymentPage />} />
-							<Route path="/Bookings" element={<Bookings />} />
+							<Route path="/bookings" element={<Bookings />} />
+							<Route path="/bookings/me" element={<MyBookings />} />
 							{decodedUser?.user.role === 'admin' && (
 								<>
 									<Route path="/create-event" element={<CreateEvent />} />
