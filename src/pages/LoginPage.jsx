@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
 import useAuth from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 	const { login: loginUser } = useAuth();
@@ -23,14 +22,14 @@ const LoginPage = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// console.log(formData);
+		console.log(formData);
 		try {
 			const user = await login(formData);
 			loginUser(user);
 			console.log(user);
 			navigate('/');
 		} catch (error) {
-			console.error(error.response.data.msg);
+			console.error(error);
 		}
 	};
 

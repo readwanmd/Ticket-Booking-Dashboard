@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import BookingForm from '../components/Bookings/BookingForm';
 import EventDetail from '../components/Events/EventDetail';
+import useAuth from '../hooks/useAuth';
 import MainLayout from '../layout/MainLayout';
 import Bookings from '../pages/Bookings';
 import CreateEvent from '../pages/CreateEvent';
@@ -15,6 +16,8 @@ import EventProvider from '../providers/EventProvider';
 import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => {
+	const { decodedUser } = useAuth();
+
 	return (
 		<UserProvider>
 			<EventProvider>
@@ -24,9 +27,13 @@ const AppRoutes = () => {
 							<Route path="/" element={<Home />} />
 							<Route path="/events" element={<Events />} />
 							<Route path="/event/:id" element={<EventDetail />} />
-							<Route path="/Bookings" element={<Bookings />} />
 							<Route path="/book-event" element={<BookingForm />} />
-							<Route path="/create-event" element={<CreateEvent />} />
+							{decodedUser?.user.role === 'admin' && (
+								<>
+									<Route path="/Bookings" element={<Bookings />} />
+									<Route path="/create-event" element={<CreateEvent />} />
+								</>
+							)}
 						</Route>
 					</Route>
 					<Route path="/login" element={<LoginPage />} />
