@@ -1,4 +1,4 @@
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import AuthContext from '../contexts/AuthContext';
 
