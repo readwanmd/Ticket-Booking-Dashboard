@@ -59,6 +59,17 @@ Make sure you have the following installed on your local development machine:
    yarn start
    ```
 
+### **Login Credentials**:
+
+```plaintext
+# Admin
+Email: admin@example.com
+Password: password123
+# user
+Email: readwanmd@gmail.com
+Password: password123
+```
+
 ## Key Components
 
 ### EventCreateForm
